@@ -1,0 +1,30 @@
+{
+    "name": "phergie/phergie-irc-plugin-react-db",
+    "description": "Phergie plugin for adding phergie events to database",
+    "keywords": [ "phergie", "irc", "bot", "plugin" ],
+    "license": "BSD-2-Clause",
+    "support": {
+        "email": "reinier@reinierboon.com",
+        "irc": "irc://irc.freenode.net/phergie",
+        "issues": "https://github.com/reinierbee/phergie-irc-plugin-db/issues",
+        "source": "https://github.com/reinierbee/phergie-irc-plugin-db"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "phergie/phergie-irc-bot-react": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.1.*",
+        "phake/phake": "2.0.0-beta2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Phergie\\Irc\\Plugin\\React\\Db\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Phergie\\Irc\\Tests\\Plugin\\React\\Db\\": "tests"
+        }
+    }
+}
