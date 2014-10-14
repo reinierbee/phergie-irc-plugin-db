@@ -24,7 +24,6 @@ use Phergie\Irc\Plugin\React\Db\Plugin;
 class PluginTest extends \PHPUnit_Framework_TestCase
 {
 
-
     /**
      * Tests that getSubscribedEvents() returns an array.
      */

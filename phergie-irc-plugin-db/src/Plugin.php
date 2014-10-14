@@ -13,6 +13,7 @@ namespace Phergie\Irc\Plugin\React\Db;
 use Phergie\Irc\Bot\React\AbstractPlugin;
 use Phergie\Irc\Bot\React\EventQueueInterface as Queue;
 use Phergie\Irc\Event\EventInterface as Event;
+use Doctrine\Common\ClassLoader;
 
 /**
  * Plugin class.
@@ -22,6 +23,8 @@ use Phergie\Irc\Event\EventInterface as Event;
  */
 class Plugin extends AbstractPlugin
 {
+    protected $db;
+
     /**
      * Accepts plugin configuration.
      *
@@ -33,6 +36,16 @@ class Plugin extends AbstractPlugin
      */
     public function __construct(array $config = array())
     {
+        $config = new \Doctrine\DBAL\Configuration();
+//..
+        $connectionParams = array(
+            'dbname' => 'phergie-db',
+            'user' => 'root',
+            'password' => '',
+            'host' => 'localhost',
+            'driver' => 'pdo_mysql',
+        );
+        $this->db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
 
     }
 
@@ -56,5 +69,13 @@ class Plugin extends AbstractPlugin
      */
     public function handleEvent(Event $event, Queue $queue)
     {
+        //$classLoader = new ClassLoader('Doctrine', '/path/to/doctrine');
+        //$classLoader->register();
+
+        var_dump($event);
+        var_dump($queues);
+
+        //$sql = "";
+        //$this->db->query($sql);
     }
 }
