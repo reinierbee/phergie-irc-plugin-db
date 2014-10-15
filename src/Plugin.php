@@ -14,6 +14,7 @@ use Phergie\Irc\Bot\React\AbstractPlugin;
 use Phergie\Irc\Bot\React\EventQueueInterface as Queue;
 use Phergie\Irc\Event\EventInterface as Event;
 use Doctrine\Common\ClassLoader;
+use Doctrine\DBAL;
 
 /**
  * Plugin class.
@@ -36,7 +37,7 @@ class Plugin extends AbstractPlugin
      */
     public function __construct(array $config = array())
     {
-        $config = new \Doctrine\DBAL\Configuration();
+        $config = new DBAL\Configuration();
 //..
         $connectionParams = array(
             'dbname' => 'phergie-db',
@@ -45,7 +46,7 @@ class Plugin extends AbstractPlugin
             'host' => 'localhost',
             'driver' => 'pdo_mysql',
         );
-        $this->db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+        $this->db = DBAL\DriverManager::getConnection($connectionParams, $config);
 
     }
 
@@ -73,7 +74,7 @@ class Plugin extends AbstractPlugin
         //$classLoader->register();
 
         var_dump($event);
-        var_dump($queues);
+        var_dump($queue);
 
         //$sql = "";
         //$this->db->query($sql);
