@@ -37,16 +37,22 @@ class Plugin extends AbstractPlugin
      */
     public function __construct(array $config = array())
     {
-        $config = new DBAL\Configuration();
-//..
-        $connectionParams = array(
-            'dbname' => 'phergie-db',
-            'user' => 'root',
-            'password' => '',
-            'host' => 'localhost',
-            'driver' => 'pdo_mysql',
-        );
-        $this->db = DBAL\DriverManager::getConnection($connectionParams, $config);
+        if(!empty($config['database'])) {
+            $connectionParams = $config['database'];
+            $config['database'] = new DBAL\Configuration();
+            $this->db = DBAL\DriverManager::getConnection($connectionParams, $config['database']);
+
+        } else {
+            $config['database'] = new DBAL\Configuration();
+            $connectionParams = array(
+                'dbname' => 'phergie-db',
+                'user' => 'root',
+                'password' => '',
+                'host' => 'localhost',
+                'driver' => 'pdo_mysql',
+            );
+            $this->db = DBAL\DriverManager::getConnection($connectionParams, $config['database']);
+        }
 
     }
 
@@ -73,10 +79,22 @@ class Plugin extends AbstractPlugin
         //$classLoader = new ClassLoader('Doctrine', '/path/to/doctrine');
         //$classLoader->register();
 
-        var_dump($event);
-        var_dump($queue);
+        //var_dump($event);
+        //var_dump($queue);
 
-        //$sql = "";
-        //$this->db->query($sql);
+
+        // Verify this event contains a command and remove the substring
+        // identifying it as one
+        $eventParams = $event->getParams();
+        $target = $event->getCommand() === 'PRIVMSG'
+            ? $eventParams['receivers']
+            : $eventParams['nickname'];
+        $message = $eventParams['text'];
+
+        var_dump($eventParams);
+
+        $sql = "INSERT INTO event_PRIVMSG (message, target)
+                VALUES ('$message', '$target')";
+        $this->db->query($sql);
     }
 }

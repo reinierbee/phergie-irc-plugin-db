@@ -47,22 +47,25 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             'NOTICE' => 'nickname',
         );
 
-        $message = 'foo bar "two words" baz';
+        $message = '"test message"';
 
-        $prefixConfig = array('prefix' => '!');
-        $patternConfig = array('pattern' => '/^~/');
+        $databaseConfig =array(
+            'dbname' => 'phergie-db',
+            'user' => 'root',
+            'password' => '',
+            'host' => 'localhost',
+            'driver' => 'pdo_mysql',
+        );
         $nickConfig = array('nick' => true);
 
         $configs = array(
             'foo' => array(),
-            '!' . $message => $prefixConfig,
-            '~' . $message => $patternConfig,
             'nickname ' . $message => $nickConfig,
             'nickname: ' . $message => $nickConfig,
             ' nickname, ' . $message => $nickConfig,
         );
 
-        $expectedParams = array('bar', 'two words', 'baz');
+        $expectedParams = array('test message');
 
         $targets = array('#channel', 'user');
 
@@ -90,18 +93,8 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         // Events sent directly to the bot should always be interpreted as
         // potential commands
         $data[] = array(
-            $prefixConfig,
-            $getEvent('PRIVMSG', $commands['PRIVMSG'], $message, $prefixConfig, 'user'),
-            $expectedParams
-        );
-        $data[] = array(
-            $patternConfig,
-            $getEvent('PRIVMSG', $commands['PRIVMSG'], $message, $patternConfig, 'user'),
-            $expectedParams
-        );
-        $data[] = array(
-            $patternConfig,
-            $getEvent('PRIVMSG', $commands['PRIVMSG'], $message, $nickConfig, 'user'),
+            $databaseConfig,
+            $getEvent('PRIVMSG', $commands['PRIVMSG'], $message, $databaseConfig, 'user'),
             $expectedParams
         );
 
