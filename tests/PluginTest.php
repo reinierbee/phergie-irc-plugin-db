@@ -56,11 +56,8 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             'host' => 'localhost',
             'driver' => 'pdo_mysql',
         );
-        $nickConfig = array('nick' => true);
 
         $expectedParams = array('test message');
-
-        $targets = array('#channel', 'user');
 
         $getEvent = function($command, $targetField, $text, $config, $target) {
             $event = Phake::mock('\Phergie\Irc\Event\UserEventInterface');

@@ -64,7 +64,7 @@ class Plugin extends AbstractPlugin
     public function getSubscribedEvents()
     {
         return array(
-            'irc.' => 'handleEvent',
+            'irc.received.privmsg' => 'handleEvent',
         );
     }
 
