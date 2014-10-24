@@ -39,19 +39,19 @@ class Plugin extends AbstractPlugin
     {
         if(!empty($config['database'])) {
             $connectionParams = $config['database'];
-            $config['database'] = new DBAL\Configuration();
-            $this->db = DBAL\DriverManager::getConnection($connectionParams, $config['database']);
+            $configDb['database'] = new DBAL\Configuration();
+            $this->db = DBAL\DriverManager::getConnection($connectionParams, $configDb['database']);
 
         } else {
-            $config['database'] = new DBAL\Configuration();
+            $configDb['database'] = new DBAL\Configuration();
             $connectionParams = array(
                 'dbname' => 'phergie-db',
                 'user' => 'root',
-                'password' => '',
+                'password' => 'asdadas',
                 'host' => 'localhost',
                 'driver' => 'pdo_mysql',
             );
-            $this->db = DBAL\DriverManager::getConnection($connectionParams, $config['database']);
+            $this->db = DBAL\DriverManager::getConnection($connectionParams, $configDb['database']);
         }
 
     }

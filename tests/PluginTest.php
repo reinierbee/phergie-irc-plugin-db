@@ -49,7 +49,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
 
         $message = '"test message"';
 
-        $databaseConfig =array(
+        $config['database'] = array(
             'dbname' => 'phergie-db',
             'user' => 'root',
             'password' => '',
@@ -57,13 +57,6 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             'driver' => 'pdo_mysql',
         );
         $nickConfig = array('nick' => true);
-
-        $configs = array(
-            'foo' => array(),
-            'nickname ' . $message => $nickConfig,
-            'nickname: ' . $message => $nickConfig,
-            ' nickname, ' . $message => $nickConfig,
-        );
 
         $expectedParams = array('test message');
 
@@ -81,20 +74,11 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             return $event;
         };
 
-        foreach ($commands as $command => $targetField) {
-            foreach ($configs as $text => $config) {
-                foreach ($targets as $target) {
-                    $event = $getEvent($command, $targetField, $text, $config, $target);
-                    $data[] = array($config, $event, $text == 'foo' ? array() : $expectedParams);
-                }
-            }
-        }
-
         // Events sent directly to the bot should always be interpreted as
         // potential commands
         $data[] = array(
-            $databaseConfig,
-            $getEvent('PRIVMSG', $commands['PRIVMSG'], $message, $databaseConfig, 'user'),
+            $config,
+            $getEvent('PRIVMSG', $commands['PRIVMSG'], $message, $config, 'user'),
             $expectedParams
         );
 
