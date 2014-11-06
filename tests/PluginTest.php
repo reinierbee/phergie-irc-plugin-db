@@ -64,6 +64,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             $connection = Phake::mock('\Phergie\Irc\ConnectionInterface');
             $params = array('text' => $text, $targetField => $target);
             Phake::when($connection)->getNickname()->thenReturn('nickname');
+            Phake::when($event)->getNick()->thenReturn('nickname');
             Phake::when($event)->getConnection()->thenReturn($connection);
             Phake::when($event)->getCommand()->thenReturn($command);
             Phake::when($event)->getParams()->thenReturn($params);

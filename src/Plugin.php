@@ -47,7 +47,7 @@ class Plugin extends AbstractPlugin
             $connectionParams = array(
                 'dbname' => 'phergie-db',
                 'user' => 'root',
-                'password' => 'asdadas',
+                'password' => '',
                 'host' => 'localhost',
                 'driver' => 'pdo_mysql',
             );
@@ -90,11 +90,11 @@ class Plugin extends AbstractPlugin
             ? $eventParams['receivers']
             : $eventParams['nickname'];
         $message = $eventParams['text'];
+        $nick = $event->getNick();
+        var_dump($event->getParams());
 
-        var_dump($eventParams);
-
-        $sql = "INSERT INTO event_PRIVMSG (message, target)
-                VALUES ('$message', '$target')";
+        $sql = "INSERT INTO event_PRIVMSG (nick, message, target)
+                VALUES ('$nick', '$message', '$target')";
         $this->db->query($sql);
     }
 }
